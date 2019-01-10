@@ -1,0 +1,116 @@
+<style lang="less">
+page{
+    height: 100%;
+}
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+</style>
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+import { setStore } from 'wepy-redux'
+import configStore from './store'
+
+const store = configStore()
+setStore(store)
+
+export default class extends wepy.app {
+    config = {
+        pages: [
+            "pages/uleemall",
+            "pages/test",
+            "pages/cart/cart",
+            "pages/myCenter/myCenter"
+
+
+        ],
+        window: {
+            backgroundTextStyle: 'light',
+            navigationBarBackgroundColor: '#000',
+            navigationBarTitleText: '优礼商城',
+            navigationBarTextStyle: 'white'
+        },
+        tabBar: {
+            color: "#9F8D89",
+            selectedColor: "#351009",
+            backgroundColor: "#fff",
+            borderStyle: "white",
+            list: [{
+                    pagePath: "pages/uleemall",
+                    text: "优礼商城",
+                    iconPath: "./images/index.png",
+                    selectedIconPath: "images/indexSelected.png"
+                },
+                {
+                    pagePath: "pages/test",
+                    text: "礼品分类",
+                    iconPath: "./images/classfiy.png",
+                    selectedIconPath: "images/classfiySelected.png"
+                },
+                {
+                    pagePath: "pages/cart/cart",
+                    text: "购物车",
+                    iconPath: "./images/cart.png",
+                    selectedIconPath: "images/cartSelected.png"
+                },
+                {
+                    pagePath: "pages/myCenter/myCenter",
+                    text: "个人中心",
+                    iconPath: "./images/my.png",
+                    selectedIconPath: "images/mySelected.png"
+                },
+            ]
+        }
+    }
+
+    globalData = {
+        userInfo: null,
+        login: "这是App的数据"
+    }
+
+    constructor() {
+        super()
+        this.use('promisify');
+        this.use('requestfix')
+    }
+
+    onLaunch() {
+        this.testAsync()
+    }
+
+    sleep(s) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('promise resolved')
+            }, s * 1000)
+        })
+    }
+
+    async testAsync() {
+        const data = await this.sleep(3)
+        console.log(data)
+    }
+
+    getUserInfo(cb) {
+        const that = this
+        if (this.globalData.userInfo) {
+            return this.globalData.userInfo
+        }
+        wepy.getUserInfo({
+            success(res) {
+                that.globalData.userInfo = res.userInfo
+                cb && cb(res.userInfo)
+            }
+        })
+    }
+}
+
+</script>

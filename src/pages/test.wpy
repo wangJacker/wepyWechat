@@ -1,0 +1,37 @@
+<template>
+    <view>{{title}}</view>
+    <child title="我是静态属性" :syncTitle.sync="title" :twoWayTitle="title" @hanleclick.user='handle'></child>
+    <!-- <counter></counter> -->
+</template>
+<script>
+import wepy from "wepy";
+import Counter from '../components/counter';
+import Children from '../components/child';
+import mixins from "../mixins/test";
+export default class Test extends wepy.page {
+    data = {
+        title: "这个是测试页面"
+    }
+    mixins = [mixins]
+    components = {
+        child: Children,
+        counter: Counter
+    }
+    onLoad() {
+        console.log(this.mixin)
+    }
+    methods = {
+        handle(num) {
+            console.log(this)
+            // this.mixins.tap();
+            this.methods.tap();
+        },
+        test(){
+            console.log(333)
+        }
+    }
+}
+
+</script>
+<style lang="less">
+</style>

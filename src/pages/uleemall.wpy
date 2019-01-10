@@ -1,0 +1,111 @@
+<style lang="less">
+.section {
+    background: #FBF8F7;
+    padding: 0 12px;
+    height: 100%;
+
+    .middleBar {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 24px;
+        background: #fff;
+        margin-top: 8px;
+
+        .item {
+            width: 56px;
+
+            image {
+                width: 56px;
+                height: 56px;
+                display: block;
+            }
+
+            view {
+                width: 56px;
+                font-size: 14px;
+                color: #351009;
+                text-align: center;
+                line-height: 20px;
+                height: 20px;
+            }
+        }
+    }
+
+    .hotSell {
+        font-size: 15px;
+        color: #351009;
+        line-height: 21px;
+        margin: 24px 0 4px 0;
+    }
+}
+
+</style>
+<template lang="wxml">
+    <view class='section'>
+        <banerSwiper :imgUrls="imgUrls"></banerSwiper>
+        <view class="middleBar">
+            <repeat for="{{middleBar}}" key="index" index="index" item="item">
+                <view class="item">
+                    <image src="{{item.imagePath}}" mode="scaleToFill"></image>
+                    <view>{{item.text}}</view>
+                </view>
+            </repeat>
+        </view>
+        <view hover-class="none" class='hotSell'>热销单品</view>
+        <goodsList></goodsList>
+    </view>
+</template>
+<script>
+import wepy from 'wepy';
+import BanerSwiper from "@/components/bannerSwiper/banerSwiper";
+import GoodsList from "@/components/goodsList/goodsList";
+export default class Index extends wepy.page {
+    // 只在 Page 实例中存在的配置数据，对应于原生的 page.json 文件
+    config = {}
+    // 页面所需数据均需在这里声明，用于模板数据绑定
+    data = {
+        title: "这是tite",
+        indicatorDots: false,
+        autoplay: true,
+        interval: 3000,
+        circular: true,
+        curIndex: 3,
+        imgUrls: [
+            'http://static.ydcss.com/uploads/ydui/3.jpg',
+            'http://static.ydcss.com/uploads/ydui/2.jpg',
+            'http://static.ydcss.com/uploads/ydui/1.jpg',
+        ],
+        middleBar: [{
+                imagePath: "../images/jd.png",
+                text: "京东"
+            },
+            {
+                imagePath: "../images/yx.png",
+                text: "严选"
+            },
+            {
+                imagePath: "../images/gift.png",
+                text: "自营"
+            },
+            {
+                imagePath: "../images/kj.png",
+                text: "优惠券"
+            }
+        ]
+    }
+    // 事件处理函数（集中保存在 methods 对象中）
+    methods = {
+
+    }
+    // 声明页面中将要使用到的组件，或声明组件中所引用的子组件
+    components = {
+        banerSwiper: BanerSwiper,
+        goodsList:GoodsList
+    }
+    // 在 Page 和 Component 共用的生命周期函数
+    onLoad() {
+        console.log('onLoad Page...')
+    }
+}
+
+</script>

@@ -1,0 +1,40 @@
+<style lang="less">
+</style>
+<template>
+    <view class="child">
+        {{title}}
+    </view>
+    <view class="child">
+        {{syncTitle}}
+    </view>
+    <view class="child" @tap='handleClick'>
+        {{twoWayTitle}}
+    </view>
+</template>
+<script>
+import wepy from "wepy";
+export default class Children extends wepy.component {
+    props = {
+        title: String,
+        syncTitle: {
+            type: String,
+            default: 'null',
+        },
+        twoWayTitle: {
+            type: String,
+            default: 'nothing',
+            twoWay: true
+        }
+    }
+    ready() {
+        console.log(1)
+    }
+    methods={
+        handleClick(){
+            console.log('click')
+            this.$emit("hanleclick",12);
+        }
+    }
+}
+
+</script>

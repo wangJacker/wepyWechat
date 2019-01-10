@@ -1,0 +1,98 @@
+<style lang="less">
+.banner {
+    position: relative;
+
+    .swiper {
+        width: 100%;
+        height: 206px;
+
+        image {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    }
+
+    .dots {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        display: flex;
+        bottom: 12px;
+
+        .dot {
+            margin-right: 8px;
+            width: 24px;
+            height: 2px;
+            background: #9F8D89;
+        }
+
+        .cur {
+            background: #AE2309;
+        }
+    }
+}
+
+</style>
+<template lang="wxml">
+    <view hover-class="none" class="banner">
+        <swiper class='swiper' indicator-dots='{{indicatorDots}}' autoplay='{{autoplay}}' interval="{{interval}}" circular="{{circular}}" indicator-color="#9F8D89" indicator-active-color="#AE2309" bindchange="changeCur" current="{{curIndex}}">
+            <repeat for="{{imgUrls}}" key="index" index="index" item="item">
+                <swiper-item>
+                    <image src="{{item}}" mode="scaleToFill"></image>
+                </swiper-item>
+            </repeat>
+        </swiper>
+        <view class="dots">
+            <repeat for="{{imgUrls}}" key="index" index="index" item="item">
+                <view class="dot {{index === curIndex ? 'cur':''}}" @tap="goCurIndex({{index}})"></view>
+            </repeat>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class BanerSwiper extends wepy.component {
+    data = {
+        curIndex: 0
+    }
+    // 事件处理函数（集中保存在 methods 对象中）
+    props = {
+        indicatorDots: {
+            type: Boolean,
+            default: false,
+        },
+        autoplay: {
+            type: Boolean,
+            default: true,
+        },
+        interval: {
+            type: Number,
+            default: 3000,
+        },
+        circular: {
+            type: Boolean,
+            default: true,
+        },
+        imgUrls: Array
+    }
+    methods = {
+        changeCur({ detail: { current, source } }) {
+            this.curIndex = current;
+        },
+        goCurIndex(index) {
+            this.curIndex = index;
+        }
+    }
+    // 声明组件之间的事件处理函数
+    events = {}
+    // 声明页面中将要使用到的组件，或声明组件中所引用的子组件
+    components = {}
+    // 在 Page 和 Component 共用的生命周期函数
+    onLoad() {
+        console.log('onLoad Component...')
+    }
+}
+
+</script>

@@ -1,0 +1,30 @@
+<style lang="less">
+    
+</style>
+<template lang="wxml">
+    <view class="goodsList">
+        <view class="goodsItem">
+            <image src="" mode="scaleToFill"></image>
+            <view class="goodsName">Kinven灭蚊魔方</view>
+            <view class="goodsPrice">2321</view>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class GoodsList extends wepy.component {
+    data = {}
+    // 事件处理函数（集中保存在 methods 对象中）
+    methods = {}
+    // 声明组件之间的事件处理函数
+    events = {}
+    // 声明页面中将要使用到的组件，或声明组件中所引用的子组件
+    components = {}
+    // 在 Page 和 Component 共用的生命周期函数
+    onLoad() {
+        console.log('onLoad Component...')
+    }
+}
+
+</script>

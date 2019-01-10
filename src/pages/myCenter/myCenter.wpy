@@ -1,0 +1,16 @@
+<template>
+    <view>
+        {{title}}
+    </view>
+</template>
+<script>
+import wepy from "wepy";
+export default class MyCenter extends wepy.page {
+    data = {
+        title: "这是个人中心"
+    }
+}
+
+</script>
+<style lang="less">
+</style>
