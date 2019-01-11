@@ -53,13 +53,16 @@
         </view>
         <view hover-class="none" class='hotSell'>热销单品</view>
         <goodsList :goodsData.sync="goodsData"></goodsList>
+        <lodingMore :isloding.sync="isloding" :hasData.sync="hasData"></lodingMore>
     </view>
 </template>
 <script>
 import wepy from 'wepy';
 import BanerSwiper from "@/components/bannerSwiper/banerSwiper";
 import GoodsList from "@/components/goodsList/goodsList";
+import LodingMore from "@/components/lodingMore/lodingMore";
 import { goodsData } from "../mock/mockData";
+import { goodsDatas } from "../mock/mockData";
 export default class Index extends wepy.page {
     // 只在 Page 实例中存在的配置数据，对应于原生的 page.json 文件
     config = {}
@@ -71,6 +74,10 @@ export default class Index extends wepy.page {
         interval: 3000,
         circular: true,
         curIndex: 3,
+        isloding: true,
+        hasData: true,
+        lodingStatus: true,
+        pageNum: 0,
         goodsData: goodsData.goods,
         imgUrls: [
             'http://static.ydcss.com/uploads/ydui/3.jpg',
@@ -97,14 +104,34 @@ export default class Index extends wepy.page {
     }
     // 事件处理函数（集中保存在 methods 对象中）
     methods = {
-        onReachBottom() {
-            console.log(2222)
+        async onReachBottom() {
+            if (this.pageNum > 3) {
+                this.hasData = false;
+                this.isloding = true;
+            }
+            if (this.lodingStatus && this.pageNum <= 3) {
+                this.lodingStatus = !this.lodingStatus;
+                this.isloding = false;
+                await new Promise((resolve, reject) => {
+                    setTimeout(resolve, 2000)
+                })
+                this.pageNum += 1;
+                this.goodsData = [...this.goodsData, ...goodsDatas.goods];
+                this.lodingStatus = !this.lodingStatus;
+                this.isloding = true;
+                this.$apply();
+            } else {
+                return false;
+            }
+
+
         }
     }
     // 声明页面中将要使用到的组件，或声明组件中所引用的子组件
     components = {
         banerSwiper: BanerSwiper,
-        goodsList: GoodsList
+        goodsList: GoodsList,
+        lodingMore: LodingMore
     }
     // 在 Page 和 Component 共用的生命周期函数
     onLoad() {

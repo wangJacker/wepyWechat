@@ -1,25 +1,72 @@
-<style lang="less"></style>
+<style lang="less">
+.loding {
+    padding: 20px 0 0 0;
 
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .tips {
+            margin-left: 10px;
+            font-size: 12px;
+            color: #9F8D89;
+        }
+    }
+
+    .noData {
+        font-size: 12px;
+        color: #9F8D89;
+        text-align: center;
+    }
+}
+
+</style>
 <template lang="wxml">
-    <slot></slot>
-    <view hover-class="none">正在加载</view>
-    <view hover-class="none">没有更多数据</view>
+    <view class="loding">
+        <view class='hidden' hidden="{{isloding}}">
+            <view hover-class="none" class='container'>
+                <image class='img' src="../../images/loding.gif" mode="scaleToFill"></image>
+                <view class='tips'>正在加载...</view>
+            </view>
+        </view>
+        <view class="noData" hidden="{{hasData}}">没有更多数据</view>
+    </view>
 </template>
-
 <script>
-  import wepy from 'wepy'
+import wepy from 'wepy'
 
-  export default class LodingMore extends wepy.component {
+export default class LodingMore extends wepy.component {
     data = {}
     // 事件处理函数（集中保存在 methods 对象中）
     methods = {}
+    props = {
+        isloding: {
+            type: Boolean,
+            default: true
+        },
+        hasData: {
+            type: Boolean,
+            default: true,
+        }
+    }
     // 声明组件之间的事件处理函数
-    events = {}
+    events = {
+        onReachBottom() {
+            console.log(3333)
+        }
+    }
     // 声明页面中将要使用到的组件，或声明组件中所引用的子组件
     components = {}
     // 在 Page 和 Component 共用的生命周期函数
-    onLoad () {
-      console.log('onLoad Component...')
+    onLoad() {
+        console.log('onLoad Component...')
     }
-  }
+}
+
 </script>

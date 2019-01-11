@@ -32,6 +32,13 @@ export const goodsData = Mock.mock({
         "price|100-400.1-2": 100,
     }]
 })
+export const goodsDatas = Mock.mock({
+    'goods|11': [{
+        'name': "@ctitle(8,24)",
+        "src": "@image('145x145',#b7ef7c)",
+        "price|100-400.1-2": 100,
+    }]
+})
 export const listData = Mock.mock({
     "list|20": [{
         'name': "@ctitle(8,12)"
