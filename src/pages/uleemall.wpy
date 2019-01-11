@@ -1,8 +1,8 @@
 <style lang="less">
 .section {
     background: #FBF8F7;
-    padding: 0 12px;
-    height: 100%;
+    padding: 0 12px 30px;
+    min-height: 100%;
 
     .middleBar {
         display: flex;
@@ -52,13 +52,14 @@
             </repeat>
         </view>
         <view hover-class="none" class='hotSell'>热销单品</view>
-        <goodsList></goodsList>
+        <goodsList :goodsData.sync="goodsData"></goodsList>
     </view>
 </template>
 <script>
 import wepy from 'wepy';
 import BanerSwiper from "@/components/bannerSwiper/banerSwiper";
 import GoodsList from "@/components/goodsList/goodsList";
+import { goodsData } from "../mock/mockData";
 export default class Index extends wepy.page {
     // 只在 Page 实例中存在的配置数据，对应于原生的 page.json 文件
     config = {}
@@ -70,6 +71,7 @@ export default class Index extends wepy.page {
         interval: 3000,
         circular: true,
         curIndex: 3,
+        goodsData: goodsData.goods,
         imgUrls: [
             'http://static.ydcss.com/uploads/ydui/3.jpg',
             'http://static.ydcss.com/uploads/ydui/2.jpg',
@@ -95,16 +97,18 @@ export default class Index extends wepy.page {
     }
     // 事件处理函数（集中保存在 methods 对象中）
     methods = {
-
+        onReachBottom() {
+            console.log(2222)
+        }
     }
     // 声明页面中将要使用到的组件，或声明组件中所引用的子组件
     components = {
         banerSwiper: BanerSwiper,
-        goodsList:GoodsList
+        goodsList: GoodsList
     }
     // 在 Page 和 Component 共用的生命周期函数
     onLoad() {
-        console.log('onLoad Page...')
+
     }
 }
 

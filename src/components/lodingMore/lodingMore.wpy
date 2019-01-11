@@ -1,0 +1,25 @@
+<style lang="less"></style>
+
+<template lang="wxml">
+    <slot></slot>
+    <view hover-class="none">正在加载</view>
+    <view hover-class="none">没有更多数据</view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class LodingMore extends wepy.component {
+    data = {}
+    // 事件处理函数（集中保存在 methods 对象中）
+    methods = {}
+    // 声明组件之间的事件处理函数
+    events = {}
+    // 声明页面中将要使用到的组件，或声明组件中所引用的子组件
+    components = {}
+    // 在 Page 和 Component 共用的生命周期函数
+    onLoad () {
+      console.log('onLoad Component...')
+    }
+  }
+</script>
