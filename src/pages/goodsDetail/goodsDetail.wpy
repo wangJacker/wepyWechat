@@ -1,0 +1,27 @@
+<style lang="less"></style>
+
+<template lang="wxml">{{title}}</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class GoodsDetail extends wepy.page {
+    // 只在 Page 实例中存在的配置数据，对应于原生的 page.json 文件
+    config = {}
+    // 页面所需数据均需在这里声明，用于模板数据绑定
+    data = {
+        title:"这是商品详情"
+    }
+    // 事件处理函数（集中保存在 methods 对象中）
+    methods = {}
+    // 声明页面中将要使用到的组件，或声明组件中所引用的子组件
+    components = {}
+    // 在 Page 和 Component 共用的生命周期函数
+    onLoad (options) {
+      console.log(options)
+    }
+    onShow(w){
+        console.log(this.getCurrentPages()[1].route)
+        console.log(w)
+    }
+  }
+</script>

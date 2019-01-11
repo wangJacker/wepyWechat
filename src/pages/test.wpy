@@ -1,6 +1,16 @@
 <template>
-    <view>{{title}}</view>
-    <child title="我是静态属性" :syncTitle.sync="title" :twoWayTitle="title" @hanleclick.user='handle'></child>
+    <view class="section">
+        <scroll-view class='left' scroll-y>
+            <repeat for="{{menuData}}" key="index" index="index" item="item">
+                <view class="item {{currentIndex==index ? 'cur' :' '}}" @tap="handleClick({{index}})">
+                    <view class='text'>{{item.name}}</view>
+                </view>
+            </repeat>
+        </scroll-view>
+        <scroll-view class='right' scroll-y></scroll-view>
+    </view>
+    <!--  <view @tap="goTo">{{title}}</view>
+    <child title="我是静态属性" :syncTitle.sync="title" :twoWayTitle="title" @hanleclick.user='handle'></child> -->
     <!-- <counter></counter> -->
 </template>
 <script>
@@ -8,30 +18,90 @@ import wepy from "wepy";
 import Counter from '../components/counter';
 import Children from '../components/child';
 import mixins from "../mixins/test";
+import { menuData } from "../mock/mockData";
 export default class Test extends wepy.page {
     data = {
-        title: "这个是测试页面"
+        menuData: menuData.menu,
+        currentIndex: 0,
     }
     mixins = [mixins]
     components = {
-        child: Children,
-        counter: Counter
+        // child: Children,
+        // counter: Counter
     }
     onLoad() {
-        console.log(this.mixin)
+        console.log(menuData.menu)
     }
     methods = {
-        handle(num) {
-            console.log(this)
-            // this.mixins.tap();
-            this.methods.tap();
-        },
-        test(){
-            console.log(333)
+        handleClick(index, e) {
+            this.currentIndex = index;
+            const query = wx.createSelectorQuery()
+            console.log(query.select('item').boundingClientRect())
+            query.select('item').boundingClientRect()
+            // console.log()
+            // query.selectViewport().scrollOffset()
+            // query.exec(function(res) {
+            //     res[0].top // #the-id节点的上边界坐标
+            //     res[1].scrollTop // 显示区域的竖直滚动位置
+            // })
         }
     }
 }
 
 </script>
 <style lang="less">
+.section {
+    height: 100%;
+    display: flex;
+
+    .left {
+        width: 80px;
+        height: 100%;
+
+        .item {
+            position: relative;
+            width: 100%;
+            padding: 0 16px;
+            box-sizing: border-box;
+            height: 40px;
+            margin-top: 2px;
+            background: #fff;
+
+            .text {
+                font-size: 12px;
+                color: #9F8D89;
+                line-height: 17px;
+                max-width: 100%;
+                position: relative;
+                left: 50%;
+                top: 50%;
+                text-align: center;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .cur {
+            background: #AE2309;
+
+            .text {
+                color: #fff;
+            }
+        }
+    }
+
+    /*隐藏滚动条*/
+    ::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        color: transparent;
+    }
+
+    .right {
+        height: 100%;
+        flex: 1;
+        margin-left: 2px;
+        background: #fff;
+    }
+}
+
 </style>

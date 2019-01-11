@@ -1,6 +1,5 @@
 <style lang="less">
 .section {
-    background: #FBF8F7;
     padding: 0 12px 30px;
     min-height: 100%;
 
@@ -135,7 +134,6 @@ export default class Index extends wepy.page {
     }
     // 在 Page 和 Component 共用的生命周期函数
     onLoad() {
-
     }
 }
 
